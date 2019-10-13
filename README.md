@@ -13,14 +13,24 @@ I work on the open source project [SwitchQL](https://github.com/SwitchQL/SwitchQ
 
 ## Start
 
-1. Run `npm start` to deploy Docker containers **OR** `docker-compose up -d` from the root directory of the project.
+1. Run `npm start` to deploy Docker containers.
 
 ## Stop
 
-1. Run `npm stop` **OR** `docker-compose down` from the root directory of the project.
+1. Run `npm stop` to stop them.
 
 ## Connect to databases
 
  - MySQL - `npm run connect:mysql`
  - Postgres - `npm run connect:postgres`
  - MsSQL - `npm run connect:mssql`
+
+## Database Init
+
+#### MySql
+The two scripts `createTables.sql` and `insertData.sql` are placed into the `docker-entrypoint-initdb.d` directory, which runs the scripts on startup.
+#### Postrgres
+The two scripts `createTables.sql` and `insertData.sql` are placed into the `docker-entrypoint-initdb.d` directory, which runs the scripts on startup.
+#### MsSql
+The two scripts `createTables.sql` and `insertData.sql` are placed into the `docker-entrypoint-initdb.d` directory, which does not exist natively.
+The CLI tool `sqlcmd` is used to run the scripts 10 seconds after the container starts up throught the npm script `poststart`.
