@@ -1,0 +1,46 @@
+{
+  "name": "db-docker",
+  "version": "1.0.0",
+  "description": "Docker databases",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker-compose up -d",
+    "poststart": "sleep 10 && docker exec db-docker_mssql bash -c './docker-entrypoint-initdb.d/init.sh'",
+    "stop": "docker-compose down",
+    "lint": "./node_modules/.bin/yamllint -c ./.yaml-lint.json docker-compose.yml",
+    "connect:mysql": "mysql -h localhost -P 3306 --protocol=tcp -u root -p",
+    "connect:mssql": "sqlcmd -S tcp:127.0.0.1,1433 -U SA",
+    "connect:postgres": "psql -h 127.0.0.1 -p 5432 -U postgres"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laueian/db-docker.git"
+  },
+  "keywords": [
+    "docker",
+    "database"
+  ],
+  "author": "Ian Laue",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laueian/db-docker/issues"
+  },
+  "homepage": "https://github.com/laueian/db-docker#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^3.0.1",
+    "lint-staged": "^9.2.0",
+    "yaml-lint": "^1.2.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{yml,yaml}": [
+      "npm run lint",
+      "git add"
+    ]
+  }
+}
