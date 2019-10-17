@@ -27,6 +27,8 @@ services:
       - postgres_sample:/var/lib/postgresql/data
       - ./pgSql:/docker-entrypoint-initdb.d
     restart: always
+    environment:
+      POSTGRES_PASSWORD: password
     ports:
       - 5432:5432
     expose:
